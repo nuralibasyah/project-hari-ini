@@ -27,10 +27,21 @@ const HomeScreen = () => {
   }, []);
 
   const handleAdd = async (formData) => {
+    console.log(formData);
     try {
       await axios.post("https://jsonplaceholder.typicode.com/users", formData);
-      fetchData();
+
       setIsAdding(false);
+      await fetchData();
+      console.log("data: ", data);
+      setData([
+        ...data,
+        {
+          name: formData.name,
+          id: data[data.length - 1].id,
+          userId: data[data.length - 1].userId,
+        },
+      ]);
     } catch (error) {
       console.error("Error adding data:", error);
     }
